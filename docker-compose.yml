@@ -1,81 +1,81 @@
 services:
-  livekit:
-    image: livekit/livekit-server:latest
-    command: --config /etc/livekit.yaml
-    volumes:
-      - ./livekit.yaml:/etc/livekit.yaml:ro
-    network_mode: host
-    restart: unless-stopped
+    livekit:
+        image: livekit/livekit-server:latest
+        command: --config /etc/livekit.yaml
+        volumes:
+            - ./livekit.yaml:/etc/livekit.yaml:ro
+        network_mode: host
+        restart: unless-stopped
 
-  caddy:
-    image: caddy:2
-    network_mode: host
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    restart: unless-stopped
+    caddy:
+        image: caddy:2
+        network_mode: host
+        volumes:
+            - ./Caddyfile:/etc/caddy/Caddyfile:ro
+            - caddy_data:/data
+            - caddy_config:/config
+        restart: unless-stopped
 
-  db:
-    image: postgres:16
-    env_file:
-      - ./db.env
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-    restart: unless-stopped
+    db:
+        image: postgres:16
+        env_file:
+            - ./db.env
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+            interval: 5s
+            timeout: 3s
+            retries: 10
+        restart: unless-stopped
 
-  redis:
-    image: redis:7-alpine
-    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-    restart: unless-stopped
+    redis:
+        image: redis:7-alpine
+        command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+        volumes:
+            - redis_data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 5s
+            timeout: 3s
+            retries: 10
+        restart: unless-stopped
 
-  api:
-    build:
-      context: ../ops-api
-    env_file:
-      - ./api.env
-    volumes:
-      - ./secrets:/secrets:ro
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    ports:
-      - "127.0.0.1:8080:8080"
-    restart: unless-stopped
+    api:
+        build:
+            context: ../ops-api
+        env_file:
+            - ./api.env
+        volumes:
+            - ./secrets:/secrets:ro
+        depends_on:
+            db:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        ports:
+            - "127.0.0.1:8080:8080"
+        restart: unless-stopped
 
-  web:
-    build:
-      context: ../ops-web
-      args:
-        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-https://2.sodam.store}
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://2.sodam.store}
-        NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL:-wss://2.sodam.store}
-        NEXT_PUBLIC_ROOM_NAME: ${NEXT_PUBLIC_ROOM_NAME:-demo-room}
-        NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}
-        NEXT_PUBLIC_KAKAO_CLIENT_ID: ${NEXT_PUBLIC_KAKAO_CLIENT_ID}
-        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-    env_file:
-      - ./web.env
-    ports:
-      - "127.0.0.1:3000:3000"
-    restart: unless-stopped
+    web:
+        build:
+            context: ../ops-web
+            args:
+                NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-https://2.sodam.store}
+                NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://2.sodam.store}
+                NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL:-wss://2.sodam.store}
+                NEXT_PUBLIC_ROOM_NAME: ${NEXT_PUBLIC_ROOM_NAME:-demo-room}
+                NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}
+                NEXT_PUBLIC_KAKAO_CLIENT_ID: ${NEXT_PUBLIC_KAKAO_CLIENT_ID}
+                NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        env_file:
+            - ./web.env
+        ports:
+            - "127.0.0.1:3000:3000"
+        restart: unless-stopped
 
 volumes:
-  caddy_data:
-  caddy_config:
-  db_data:
-  redis_data:
+    caddy_data:
+    caddy_config:
+    db_data:
+    redis_data:
