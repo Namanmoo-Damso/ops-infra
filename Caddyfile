@@ -2,7 +2,99 @@
   email greyhairchooselife@gmail.com
 }
 
+1.sodam.store {
+  # LiveKit 관련 경로를 먼저 처리
+  handle /rtc* {
+    reverse_proxy 127.0.0.1:7880
+  }
+  handle /twirp* {
+    reverse_proxy 127.0.0.1:7880
+  }
+
+  handle /v1/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /admin/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /healthz {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
+}
+
 2.sodam.store {
+  # LiveKit 관련 경로를 먼저 처리
+  handle /rtc* {
+    reverse_proxy 127.0.0.1:7880
+  }
+  handle /twirp* {
+    reverse_proxy 127.0.0.1:7880
+  }
+
+  handle /v1/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /admin/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /healthz {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
+}
+
+3.sodam.store {
+  # LiveKit 관련 경로를 먼저 처리
+  handle /rtc* {
+    reverse_proxy 127.0.0.1:7880
+  }
+  handle /twirp* {
+    reverse_proxy 127.0.0.1:7880
+  }
+
+  handle /v1/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /admin/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /healthz {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
+}
+
+4.sodam.store {
+  # LiveKit 관련 경로를 먼저 처리
+  handle /rtc* {
+    reverse_proxy 127.0.0.1:7880
+  }
+  handle /twirp* {
+    reverse_proxy 127.0.0.1:7880
+  }
+
+  handle /v1/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /admin/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /healthz {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
+}
+
+5.sodam.store {
   # LiveKit 관련 경로를 먼저 처리
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
