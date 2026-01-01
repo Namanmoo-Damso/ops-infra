@@ -1,0 +1,10 @@
+port: 7880
+log_level: info
+rtc:
+    use_external_ip: true
+    tcp_port: 7883
+    port_range_start: 50000
+    port_range_end: 60000
+    allow_tcp_fallback: true
+keys:
+    YOUR_API_KEY: YOUR_API_SECRET

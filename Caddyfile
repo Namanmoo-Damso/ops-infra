@@ -1,0 +1,27 @@
+{
+  email greyhairchooselife@gmail.com
+  acme_ca https://acme.zerossl.com/v2/DV90
+}
+
+2.sodam.store {
+  # LiveKit 관련 경로를 먼저 처리
+  handle /rtc* {
+    reverse_proxy 127.0.0.1:7880
+  }
+  handle /twirp* {
+    reverse_proxy 127.0.0.1:7880
+  }
+
+  handle /v1/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /admin/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /healthz {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
+}

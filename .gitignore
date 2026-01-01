@@ -1,0 +1,13 @@
+# Environment files (contain secrets)
+*.env
+!*.env.example
+
+# LiveKit config (contains API keys)
+livekit.yaml
+!livekit.yaml.example
+
+# Secrets directory
+secrets/
+
+# OS
+.DS_Store
