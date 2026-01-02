@@ -60,14 +60,17 @@ services:
   web:
     build:
       context: ../ops-web
+      # 빌드시점에만 사용
       args:
-        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-https://2.sodam.store}
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://2.sodam.store}
-        NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL:-wss://2.sodam.store}
-        NEXT_PUBLIC_ROOM_NAME: ${NEXT_PUBLIC_ROOM_NAME:-demo-room}
+        # docker-compose.yml파일과 동일한 위치의 .env가 자동으로 주입됨
+        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL}
+        NEXT_PUBLIC_ROOM_NAME: ${NEXT_PUBLIC_ROOM_NAME}
         NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}
         NEXT_PUBLIC_KAKAO_CLIENT_ID: ${NEXT_PUBLIC_KAKAO_CLIENT_ID}
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+    # 런타임에만 사용
     env_file:
       - ./web.env
     ports:
