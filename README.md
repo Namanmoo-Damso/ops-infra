@@ -33,6 +33,7 @@ ops-infra/
 # 환경 파일 복사
 cp api.env.example api.env
 cp web.env.example web.env
+cp web.env.example .env
 cp db.env.example db.env
 cp livekit.yaml.example livekit.yaml
 

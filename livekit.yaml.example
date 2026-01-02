@@ -7,4 +7,5 @@ rtc:
     port_range_end: 60000
     allow_tcp_fallback: true
 keys:
-    YOUR_API_KEY: YOUR_API_SECRET
+    # api.env에서 복사
+    <VALUE_OF_LIVEKIT_API_KEY>: <VALUE_OF_LIVEKIT_API_SECRET>
