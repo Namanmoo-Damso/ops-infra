@@ -10,7 +10,9 @@
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }
@@ -33,7 +35,9 @@
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }
@@ -56,7 +60,9 @@
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }
@@ -79,7 +85,9 @@
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }
@@ -102,7 +110,9 @@
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }

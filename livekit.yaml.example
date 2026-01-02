@@ -9,3 +9,9 @@ rtc:
 keys:
     # api.env에서 복사
     <VALUE_OF_LIVEKIT_API_KEY>: <VALUE_OF_LIVEKIT_API_SECRET>
+
+webhook:
+  # LiveKit 이벤트를 백엔드로 전송하여 웹 클라이언트 자동 업데이트
+  api_key: <VALUE_OF_LIVEKIT_API_KEY> 
+  urls:
+    - https://n.sodam.store/webhook/livekit
