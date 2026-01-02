@@ -77,6 +77,17 @@ services:
       - '127.0.0.1:3000:3000'
     restart: unless-stopped
 
+  ai-agent:
+    build:
+      context: ../ops-api/agents
+      dockerfile: Dockerfile
+    env_file:
+      - ./agent.env
+    depends_on:
+      - api
+    restart: unless-stopped
+    command: ['python', 'voice/simple_agent.py', 'dev']
+
 volumes:
   caddy_data:
   caddy_config:
