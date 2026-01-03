@@ -77,6 +77,15 @@ services:
       - '127.0.0.1:3000:3000'
     restart: unless-stopped
 
+  agent:
+    build:
+      context: ../ops-api/agents
+    env_file:
+      - ./agent.env
+    depends_on:
+      - livekit
+    restart: unless-stopped
+
 volumes:
   caddy_data:
   caddy_config:
