@@ -82,6 +82,7 @@ services:
       context: ../ops-api/agents
     env_file:
       - ./agent.env
+    network_mode: host
     depends_on:
       - livekit
     restart: unless-stopped
