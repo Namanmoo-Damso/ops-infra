@@ -2,8 +2,37 @@
   email greyhairchooselife@gmail.com
 }
 
+(aasa) {
+  header Content-Type "application/json"
+  respond `{
+    "applinks": {
+      "apps": [],
+      "details": [
+        {
+          "appIDs": ["4Y5BW58548.com.ilim.damso"],
+          "components": [
+            {
+              "/": "/invite*",
+              "comment": "어르신 초대 링크"
+            }
+          ]
+        }
+      ]
+    }
+  }` 200
+}
+
 1.sodam.store {
-  # LiveKit 관련 경로를 먼저 처리
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
@@ -29,6 +58,16 @@
 
 2.sodam.store {
   # LiveKit 관련 경로를 먼저 처리
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
@@ -54,6 +93,16 @@
 
 3.sodam.store {
   # LiveKit 관련 경로를 먼저 처리
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
@@ -79,6 +128,16 @@
 
 4.sodam.store {
   # LiveKit 관련 경로를 먼저 처리
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
@@ -104,6 +163,16 @@
 
 5.sodam.store {
   # LiveKit 관련 경로를 먼저 처리
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
