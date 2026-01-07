@@ -61,7 +61,7 @@ services:
       sh -c "
       npm install &&
       npx prisma generate &&
-      npx prisma db push &&
+      npx prisma db push --accept-data-loss &&
       npm run start:dev
       "
     restart: unless-stopped
