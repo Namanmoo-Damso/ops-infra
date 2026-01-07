@@ -1,16 +1,35 @@
 {
-  email greyhairchooselife@gmail.com
+	email greyhairchooselife@gmail.com
 }
 
-2.sodam.store {
-  # LiveKit 관련 경로를 먼저 처리
+sodam.store {
+  log {
+    output stdout
+    format json
+  }
+  handle /.well-known/apple-app-site-association {
+    import aasa
+  }
+  handle /apple-app-site-association {
+    import aasa
+  }
   handle /rtc* {
     reverse_proxy 127.0.0.1:7880
   }
   handle /twirp* {
     reverse_proxy 127.0.0.1:7880
   }
-
+  handle /webhook/* {
+    reverse_proxy 127.0.0.1:8080
+  }
+  handle /v1/events/* {
+    reverse_proxy 127.0.0.1:8080 {
+      flush_interval -1
+      transport http {
+        response_header_timeout 0
+      }
+    }
+  }
   handle /v1/* {
     reverse_proxy 127.0.0.1:8080
   }
@@ -23,4 +42,144 @@
   handle {
     reverse_proxy 127.0.0.1:3000
   }
+}
+
+1.sodam.store {
+	log {
+		output stdout
+		format json
+	}
+	handle /rtc* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /twirp* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /admin/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+}
+
+2.sodam.store {
+	log {
+		output stdout
+		format json
+	}
+	handle /rtc* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /twirp* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /admin/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+}
+
+3.sodam.store {
+	log {
+		output stdout
+		format json
+	}
+	handle /rtc* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /twirp* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /admin/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+}
+
+4.sodam.store {
+	log {
+		output stdout
+		format json
+	}
+	handle /rtc* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /twirp* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /admin/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+}
+
+5.sodam.store {
+	log {
+		output stdout
+		format json
+	}
+	handle /rtc* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /twirp* {
+		reverse_proxy 127.0.0.1:7880
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /v1/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /admin/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
 }

@@ -33,6 +33,7 @@ ops-infra/
 # 환경 파일 복사
 cp api.env.example api.env
 cp web.env.example web.env
+cp web.env.example .env
 cp db.env.example db.env
 cp livekit.yaml.example livekit.yaml
 
@@ -55,11 +56,11 @@ docker compose down
 
 ## 서비스 포트
 
-| 서비스 | 내부 포트 | 외부 접근 |
-|--------|----------|----------|
-| API | 8080 | Caddy → /v1/* |
-| Web | 3000 | Caddy → / |
-| LiveKit | 7880 | Caddy → /rtc*, /twirp* |
-| PostgreSQL | 5432 | 내부만 |
-| Redis | 6379 | 내부만 |
-| Caddy | 80, 443 | 외부 HTTPS |
+| 서비스     | 내부 포트 | 외부 접근              |
+| ---------- | --------- | ---------------------- |
+| API        | 8080      | Caddy → /v1/\*         |
+| Web        | 3000      | Caddy → /              |
+| LiveKit    | 7880      | Caddy → /rtc*, /twirp* |
+| PostgreSQL | 5432      | 내부만                 |
+| Redis      | 6379      | 내부만                 |
+| Caddy      | 80, 443   | 외부 HTTPS             |

@@ -34,8 +34,6 @@ services:
     command: ['redis-server', '--save', '60', '1', '--loglevel', 'warning']
     volumes:
       - redis_data:/data
-    ports:
-      - '127.0.0.1:6379:6379'
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
@@ -44,14 +42,14 @@ services:
     restart: unless-stopped
 
   api:
-    build:
-      context: ../ops-api
+    image: node:20-alpine
+    working_dir: /app
     env_file:
       - ./api.env
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ./secrets:/secrets:ro
+      - ../ops-api:/app # 소스 코드 마운트
+      - /app/node_modules # 컨테이너 내부 의존성 보호
     depends_on:
       db:
         condition: service_healthy
@@ -59,36 +57,28 @@ services:
         condition: service_healthy
     ports:
       - '127.0.0.1:8080:8080'
+    command: >
+      sh -c "
+      npm install &&
+      npx prisma generate &&
+      npx prisma db push --accept-data-loss &&
+      npm run start:dev
+      "
     restart: unless-stopped
 
   web:
-    build:
-      context: ../ops-web
-      # 빌드시점에만 사용
-      args:
-        # docker-compose.yml파일과 동일한 위치의 .env가 자동으로 주입됨
-        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE}
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-        NEXT_PUBLIC_LIVEKIT_URL: ${NEXT_PUBLIC_LIVEKIT_URL}
-        NEXT_PUBLIC_ROOM_NAME: ${NEXT_PUBLIC_ROOM_NAME}
-        NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}
-        NEXT_PUBLIC_KAKAO_CLIENT_ID: ${NEXT_PUBLIC_KAKAO_CLIENT_ID}
-        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-    # 런타임에만 사용
+    image: node:20-alpine
+    working_dir: /app
     env_file:
       - ./web.env
+    volumes:
+      - ../ops-web:/app # 소스 코드 마운트
+      - /app/node_modules # 컨테이너 내부 의존성 보호
+      - /app/.next # 빌드 캐시 보호
     ports:
       - '127.0.0.1:3000:3000'
-    restart: unless-stopped
-
-  agent:
-    build:
-      context: ../ops-api/agents
-    env_file:
-      - ./agent.env
-    network_mode: host
-    depends_on:
-      - livekit
+    # 개발용 실행 명령 (Next.js 기본값 가정)
+    command: sh -c "npm install && npm run dev"
     restart: unless-stopped
 
 volumes:
